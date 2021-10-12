@@ -4,6 +4,7 @@ Latest - 12 October 2021
 - Webcam has been added
 - JavaScript has been added
 - PoseNet model has been added
-**Coming Updates**
+ **Coming Updates**
+
 - Completion of The Project
 - Name will be added
