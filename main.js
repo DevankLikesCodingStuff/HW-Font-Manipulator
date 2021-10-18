@@ -1,26 +1,40 @@
-function setup(){ 
-    video = createCapture(VIDEO); //Create capture will turn on the webcam view
-    video.size(550,550);
-    
-    canvas = createCanvas(555, 555);
-    canvas.position(580,250); //Canvas.position will give margin left and margin top    
-    
-    poseNet = ml5.poseNet(video, modelLoaded); //The poseNet model is initialized
-    poseNet.on('pose', gotPoses);//The poseNet model will turn on
-    }
-    
-    function modelLoaded(){
-        console.log('PoseNet has **Started**!')
-    }
-    
-    function draw()
-    {
-        background('#6c33f0');
-    }
-    function gotPoses(results)
-    {
-        if(results.length > 0)//If a person is in front of the webcam then only results.length would be greater than 0
-        {
-            console.log(results);
-        }
-    }
+difference = 0;
+rightWristX = 0;
+leftWristX = 0;
+
+function setup() {
+  video = createCapture(VIDEO);
+  video.size(550, 500);
+
+  canvas = createCanvas(550, 550);
+  canvas.position(560, 150);
+
+  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
+}
+
+function modelLoaded() {
+  console.log('PoseNet Is Loaded!');
+}
+
+
+function gotPoses(results) {
+  if (results.length > 0) {
+    console.log(results);
+
+    leftWristX = results[0].pose.leftWrist.x;
+    rightWristX = results[0].pose.rightWrist.x;
+    difference = floor(leftWristX - rightWristX);
+
+    console.log("leftWristX  = " + leftWristX + " rightWristX = " + rightWristX + " difference = " + difference);
+  }
+}
+
+function draw() {
+  background('#6C91C2');
+
+  document.getElementById("font_size").innerHTML = "Font size of the text will be = " + difference + "px";
+  textSize(difference);
+  fill('#FFE787');
+  text('Devank', 50, 400);
+}
